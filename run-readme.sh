@@ -30,13 +30,21 @@ required_sections=(
     "Launching the CLI"
 )
 
+missing_sections=()
 for section in "${required_sections[@]}"; do
     if ! grep -q "$section" README.md; then
-        echo "Warning: Section '$section' not found in README.md" >&2
+        echo "✗ Section '$section' not found in README.md" >&2
+        missing_sections+=("$section")
     else
         echo "✓ Section '$section' found"
     fi
 done
+
+if [ ${#missing_sections[@]} -gt 0 ]; then
+    echo ""
+    echo "Error: Required sections missing from README.md" >&2
+    exit 1
+fi
 
 echo ""
 echo "README.md validation complete!"
