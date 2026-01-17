@@ -32,7 +32,7 @@ required_sections=(
 
 missing_sections=()
 for section in "${required_sections[@]}"; do
-    if ! grep -q "$section" README.md; then
+    if ! grep -q "^#.*$section" README.md; then
         echo "✗ Section '$section' not found in README.md" >&2
         missing_sections+=("$section")
     else
